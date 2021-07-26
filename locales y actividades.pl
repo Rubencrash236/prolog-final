@@ -23,14 +23,14 @@ local(el_cayo,restaurante,samana,baja).
     local(q_tasting,bar,santo_domingo,excelente).
 %Discotecas
     local(roof,discoteca,duarte,alta).
-    local(gold,discoteca,hermanas_mirabal,media)
-    local(dubai,discoteca,santiago,alta)
-    local(clubber,discoteca,puerto_plata,baja)
+    local(gold,discoteca,hermanas_mirabal,media).
+    local(dubai,discoteca,santiago,alta).
+    local(clubber,discoteca,puerto_plata,baja).
 %Cafes
-    local(la_cafeteria,cafe,santiago,alta)
-    local(star_bucks,cafe,santo_domingo,alta)
-    local(el_polo,cafe,duarte,media)
-    local(segafredo_zanetti,cafe,la_altagracia,baja)
+    local(la_cafeteria,cafe,santiago,alta).
+    local(star_bucks,cafe,santo_domingo,alta).
+    local(el_polo,cafe,duarte,media).
+    local(segafredo_zanetti,cafe,la_altagracia,baja).
 /*Actividades culturales como museos, obras de teatro y conciertos
 Estructura del hecho: actCultural(nombre,tipo,provincia,Precio)
 
@@ -39,19 +39,19 @@ obrasTeatrales(nombre,fecha)
 concierto(nombre,fecha,[artistas]])*/
 
 %Teatros
-    actCultural(yago_yo_no_soy_el_que_soy,teatro,santo_domingo,Precio)
+    actCultural(yago_yo_no_soy_el_que_soy,teatro,santo_domingo,Precio).
     actCultural(terapia,teatro,santiago,Precio).
     actCultural(bony_y_kin,teatro,santo_domingo,Precio).
 
 %Museos
-    actCultural(casa_juan_ponce,museo,la_altagracia,Precio)
-    actCultural(centro_leon,museo,santiago,Precio)
-    actCultural(faro_colon,museo,santo_domingo,Precio)
+    actCultural(casa_juan_ponce,museo,la_altagracia,Precio).
+    actCultural(centro_leon,museo,santiago,Precio).
+    actCultural(faro_colon,museo,santo_domingo,Precio).
 
 %Conciertos
-    actCultural(los_montaner,concierto,santo_domingo,Precio)
-    actCultural(hits_tour,concierto,santo_domingo,Precio)
-    actCultural(sunday_brunch,concierto,la_altagracia,Precio)
+    actCultural(los_montaner,concierto,santo_domingo,Precio).
+    actCultural(hits_tour,concierto,santo_domingo,Precio).
+    actCultural(sunday_brunch,concierto,la_altagracia,Precio).
 
     
 
