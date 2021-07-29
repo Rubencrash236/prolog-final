@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="Templates/plantilla.html::header">
+  <meta charset="UTF-8">
+
+  <title th:text="${titulo}">Title</title>
+  <nav th:replace="Templates/plantilla.html::navbar"></nav>
+  <link rel="stylesheet" type="text/css" media="all"
+        href="css/home.css" th:href="@{css/home.css}" />
+
+</head>
+<body>
+<div class="container">
+  <br>
+  <h1>Realizar Consulta</h1>
+  <hr>
+  <br>
+    <form enctype="multipart/form-data"  method="post" th:attr="action=${accion}" >
+
+
+        <div class="card">
+          <div  class="card-header">
+            Consultar
+          </div>
+          <div class="card-body">
+
+            <div class="row">
+
+       <div class="mb-2 col-md-6">
+        <label for="capital" class="col-sm-2 col-form-label">Capital:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="capital" name="capital" placeholder="capital" required  >
+        </div>
+      </div>
+
+      <div class="mb-2 col-md-6">
+        <label for="ubicacion" class="col-sm-2 col-form-label">Ubicacion:</label>
+        <div class="col-sm-10">
+          <select class="form-select" placeholder="Ubicacion" aria-label="Default select example" id="ubicacion" name="ubicacion">
+            <option value="1">Santiago</option>
+            <option value="2">Santo Domingo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-2 col-md-6">
+        <label for="fecha" class="col-sm-2 col-form-label">Ubicacion:</label>
+        <div class="col-sm-10">
+          <select class="form-select" placeholder="Fecha" aria-label="Default select example" id="fecha" name="fecha" required>
+            <option value="1">Manana</option>
+            <option value="2">Esta Semana</option>
+            <option value="3">Todo el Mes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-2 col-md-6">
+        <label for="actividad" class="col-sm-2 col-form-label">Actividad:</label>
+        <div class="col-sm-10">
+          <select class="form-select" placeholder="Actividad" aria-label="Default select example" id="actividad" name="actividad" required>
+            <option value="1">Bar</option>
+            <option value="2">Cine</option>
+          </select>
+        </div>
+      </div>
+          </div>
+          </div>
+          <div class="card-footer">
+            <div align="end">
+              <button type="submit" class="btn btn-primary">Ejecutar</button>
+            </div>
+        </div>
+
+      </div>
+    </form>
+
+
+
+</div>
+
+
+</body>
+</html>
