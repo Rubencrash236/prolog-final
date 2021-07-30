@@ -105,3 +105,5 @@ getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieT
 % dame los bares o discotecas dado una puntuacion, y ubicacion.
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
 getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Stars,Location),L).
+
+% 
