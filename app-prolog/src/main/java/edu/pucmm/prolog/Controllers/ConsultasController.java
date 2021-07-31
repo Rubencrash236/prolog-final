@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.jpl7.*;
 
 public class ConsultasController {
     private Javalin app;
@@ -22,7 +23,6 @@ public class ConsultasController {
             Map<String, Object> model = new HashMap<>();
 
             ctx.render("/Public/html/Consulta.html",model);
-
         });
     }
 }
