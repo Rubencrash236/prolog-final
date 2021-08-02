@@ -1,14 +1,14 @@
 local(sbg,restaurante,'santo domingo',excelente).
-    tipoComida(sbg,gourmet).
+    tipoComida(sbg,gourmet,'ELEVADO').
 
 local(shushi_bali,restaurante,duarte,alta).
-    tipoComida(shushi_bali,japonesa).
+    tipoComida(shushi_bali,japonesa,'MEDIO').
 
 local(el_fogon,restaurante,santiago,media).
-    tipoComida(el_fogon,criolla).
+    tipoComida(el_fogon,criolla,'ECONOMICO').
 
 local(el_cayo,restaurante,samana,baja).
-    tipoComida(el_cayo,pescados_y_mariscos).
+    tipoComida(el_cayo,pescados_y_mariscos,'ECONOMICO').
 
 local(drink_king,bar,espalliat,media).
 local(la_esquina_de_chalo,bar,'puerto plata',alta).
@@ -95,15 +95,43 @@ clasificacionPrecio(Precio,'ECONOMICO'):- Precio =< 500.
 clasificacionPrecio(Precio,'MEDIO'):- Precio > 500,Precio =< 1000.
 clasificacionPrecio(Precio,'ELEVADO'):- Precio > 1000.
 
+cerca(Location,Location).
+cerca('punta cana',higuey).
+cerca('punta cana','san rafael').
+cerca('punta cana','bavaro').
+cerca('bavaro',higuey).
+cerca('bavaro','san rafael').
+cerca('san francisco',tenares).
+cerca(santiago,moca).
+cerca(moca,tenares).
+cerca(moca,'san francisco').
+cerca(samana,'las terrenas').
+cerca(samana,'las galeras').
 
 % itera sobre las pelis de un cinema y devuelve el cine si este contiene el tipo de pelicula que se quiere
 movieType([]).
 movieType([Movie|Movies], Type):- pelicula(Movie,XType,_), XType = Type -> !; movieType(Movies,Type).
 getCinemaMovieType(Cinema, MovieType, Location):-cine(Cinema,Location,_,_,Movies), movieType(Movies,MovieType).
-getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Location),L).
+getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Locatison),L).
 
 % dame los bares o discotecas dado una puntuacion, y ubicacion.
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
 getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Stars,Location),L).
 
-% 
+
+searchRestaurante(Name,Location,FoodType,BudgetType):-
+    local(Name,restaurante,Location,_),tipoComida(Name,FoodType,BudgetType).
+
+getRestaurantes(Location,FoodType,BudgetType,Result):-
+                                        findall((Name,Location,FoodType,BudgetType),
+                                            searchRestaurante(Name,Location,FoodType,BudgetType),
+                                            Result).
+
+getRestaurantesCercanos(Location,FoodType,BudgetType,Result):-
+                                        bagof(Location1, cerca(Location,Location1),Cercanos),
+                                        getCercanosAux(FoodType,BudgetType,Cercanos,Result).
+
+getCercanosAux(_,_,[],[]).
+getCercanosAux(FoodType,BudgetType,[Cerca|Cercanos],Result):- getRestaurantes(Cerca,FoodType,BudgetType,R1),
+                                                             getCercanosAux(FoodType,BudgetType,Cercanos,R2),
+                                                             append(R1,R2,Result),!.
