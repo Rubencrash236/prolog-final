@@ -112,7 +112,7 @@ cerca(samana,'las galeras').
 movieType([]).
 movieType([Movie|Movies], Type):- pelicula(Movie,XType,_), XType = Type -> !; movieType(Movies,Type).
 getCinemaMovieType(Cinema, MovieType, Location):-cine(Cinema,Location,_,_,Movies), movieType(Movies,MovieType).
-getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Locatison),L).
+getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Location),L).
 
 % dame los bares o discotecas dado una puntuacion, y ubicacion.
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
