@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="Templates/plantilla.html::header">
+  <meta charset="UTF-8">
+
+  <title th:text="${titulo}">Title</title>
+  <nav th:replace="Templates/plantilla.html::navbar"></nav>
+  <link rel="stylesheet" type="text/css" media="all"
+        href="css/home.css" th:href="@{css/home.css}" />
+
+</head>
+<body>
+<div class="container">
+  <br>
+  <h1>Cines que puedes visitar</h1>
+  <hr>
+  <br>
+  <div class="card" style="width: 18rem;">
+    <div class="card-header">
+      Nombres
+    </div>
+    <ul class="list-group list-group-flush">
+        <li th:each="cine : ${cines}" th:text="${cine}" class="list-group-item transformacion">An item</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

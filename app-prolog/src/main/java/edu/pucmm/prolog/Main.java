@@ -23,18 +23,6 @@ public class Main {
         ).start(7000);
 
         new ConsultasController(app).applyRoutes();
-        //esto es para cargar el main.pl
-        Query query = new Query("consult", new Term[] {new Atom("app-prolog/src/prolog-app.pl")});
-
-        //la consulta se pone de la misma forma que en la consola de prolog
-        String consulta = "getAllCinemas(Cinema, 'horror','santiago',L)";
-
-        //if para verificar que el archivo existe
-        if(query.hasSolution()){
-            Query cinemas = new Query(consulta);
-            Map aux = cinemas.getSolution();
-            System.out.println(aux.get("L"));
-        }
 
     }
 }

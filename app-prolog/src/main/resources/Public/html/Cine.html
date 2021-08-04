@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="Templates/plantilla.html::header">
+    <meta charset="UTF-8">
+
+    <title th:text="${titulo}">Title</title>
+    <nav th:replace="Templates/plantilla.html::navbar"></nav>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="css/home.css" th:href="@{css/home.css}" />
+
+</head>
+<body>
+<div class="container">
+    <br>
+    <h1>Opciones Para Cine</h1>
+    <hr>
+    <br>
+    <form enctype="multipart/form-data"  method="post" th:attr="action=${accion}" >
+        <div class="card">
+            <div  class="card-header">
+                Consultar
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="mb-2 col-md-6">
+                        <label for="hinicio" class="col-sm-2 col-form-label">Hora Inicio:</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="hinicio" name="hinicio" placeholder="Hora Inicio" required >
+                        </div>
+                    </div>
+                    <div class="mb-2 col-md-6">
+                        <label for="hfin" class="col-sm-2 col-form-label">Hora Fin:</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="hfin" name="hfin" placeholder="Hora Fin" required >
+                        </div>
+                    </div>
+                    <div class="mb-2 col-md-6">
+                        <label for="tpelicula" class="col-sm-4 col-form-label">Tipo de Pelicula:</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" placeholder="Tipo de Pelicula" aria-label="Default select example" id="tpelicula" name="tpelicula" required>
+                                <option value="1">Comedia</option>
+                                <option value="2">Accion</option>
+                                <option value="3">Romance</option>
+                                <option value="4">Melodrama</option>
+                                <option value="5">Horror</option>
+                            </select>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div align="end">
+                <button type="submit" class="btn btn-primary">Ejecutar</button>
+            </div>
+        </div>
+
+</div>
+</form>
+</div>
+</body>
+</html>
