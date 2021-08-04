@@ -1,14 +1,20 @@
+:- dynamic precio/2.
+
+precio('ELEVADO',2000).
+precio('MEDIO',1500).
+precio('ECONOMICO',500).
+
 local(sbg,restaurante,'santo domingo',excelente).
-    tipoComida(sbg,gourmet,'ELEVADO').
+    tipoComida(sbg,gourmet,2500).
 
 local(shushi_bali,restaurante,duarte,alta).
-    tipoComida(shushi_bali,japonesa,'MEDIO').
+    tipoComida(shushi_bali,japonesa,1000).
 
 local(el_fogon,restaurante,santiago,media).
-    tipoComida(el_fogon,criolla,'ECONOMICO').
+    tipoComida(el_fogon,criolla,100).
 
 local(el_cayo,restaurante,samana,baja).
-    tipoComida(el_cayo,pescados_y_mariscos,'ECONOMICO').
+    tipoComida(el_cayo,pescados_y_mariscos,100).
 
 local(drink_king,bar,espalliat,media).
 local(la_esquina_de_chalo,bar,'puerto plata',alta).
@@ -91,10 +97,6 @@ monumento('obelisco macho','santo domingo').
 monumento('fortaleza san luis','santiago').
 monumento('fortaleza de san felipe','puerto plata').
 
-clasificacionPrecio(Precio,'ECONOMICO'):- Precio =< 500.
-clasificacionPrecio(Precio,'MEDIO'):- Precio > 500,Precio =< 1000.
-clasificacionPrecio(Precio,'ELEVADO'):- Precio > 1000.
-
 cerca(Location,Location).
 cerca('punta cana',higuey).
 cerca('punta cana','san rafael').
@@ -118,20 +120,27 @@ getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieT
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
 getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Stars,Location),L).
 
+searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars):-
+    local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType,Price < Budget.
 
-searchRestaurante(Name,Location,FoodType,BudgetType):-
-    local(Name,restaurante,Location,_),tipoComida(Name,FoodType,BudgetType).
-
-getRestaurantes(Location,FoodType,BudgetType,Result):-
-                                        findall((Name,Location,FoodType,BudgetType),
-                                            searchRestaurante(Name,Location,FoodType,BudgetType),
+getRestaurantes(Location,FoodType,BudgetType,Budget,Stars,Result):-
+                                        findall([Name,Location,FoodType,BudgetType,Budget,Stars],
+                                            searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars),
                                             Result).
 
-getRestaurantesCercanos(Location,FoodType,BudgetType,Result):-
+getRestaurantesCercanos(Location,FoodType,BudgetType,Budget,Stars,Result):-
                                         bagof(Location1, cerca(Location,Location1),Cercanos),
-                                        getCercanosAux(FoodType,BudgetType,Cercanos,Result).
+                                        getCercanosAux(FoodType,BudgetType,Budget,Stars,Cercanos,Result).
 
-getCercanosAux(_,_,[],[]).
-getCercanosAux(FoodType,BudgetType,[Cerca|Cercanos],Result):- getRestaurantes(Cerca,FoodType,BudgetType,R1),
-                                                             getCercanosAux(FoodType,BudgetType,Cercanos,R2),
+getCercanosAux(_,_,_,_,[],[]).
+getCercanosAux(FoodType,BudgetType,Budget,Stars,[Cerca|Cercanos],Result):- getRestaurantes(Cerca,FoodType,BudgetType,Budget,Stars,R1),
+                                                             getCercanosAux(FoodType,BudgetType,Budget,Stars,Cercanos,R2),
                                                              append(R1,R2,Result),!.
+
+modificarPrecio(Precio,'ECONOMICO'):- retract(precio('ECONOMICO',_)),asserta(precio('ECONOMICO',Precio)).
+modificarPrecio(Precio,'MEDIO'):- retract(precio('MEDIO',_)),asserta(precio('MEDIO',Precio)).
+modificarPrecio(Precio,'ELEVADO'):- retract(precio('ELEVADO',_)),asserta(precio('ELEVADO',Precio)).
+
+clasificacionPrecio(Precio,'ECONOMICO'):- precio('ECONOMICO',Cant),Precio =< Cant.
+clasificacionPrecio(Precio,'MEDIO'):- precio('ECONOMICO',Min),precio('MEDIO',Max),Precio > Min,Precio =< Max.
+clasificacionPrecio(Precio,'ELEVADO'):- precio('ELEVADO',Cant),Precio > Cant.
