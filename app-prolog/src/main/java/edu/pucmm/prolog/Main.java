@@ -27,6 +27,7 @@ public class Main {
         ).start(7000);
 
         new ConsultasController(app).applyRoutes();
+<<<<<<< HEAD
         //esto es para cargar el main.pl
         Query query = new Query("consult", new Term[] {new Atom("app-prolog/src/prolog-app.pl")});
 
