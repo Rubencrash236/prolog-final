@@ -7,7 +7,7 @@ local(shushi_bali,restaurante,duarte,alta).
 local(el_fogon,restaurante,santiago,media).
     tipoComida(el_fogon,criolla,'ECONOMICO').
 
-local(el_cayo,restaurante,samana,baja).
+local(el_cayo,restaurante,santiago,baja).
     tipoComida(el_cayo,pescados_y_mariscos,'ECONOMICO').
 
 local(drink_king,bar,espalliat,media).
@@ -123,7 +123,7 @@ searchRestaurante(Name,Location,FoodType,BudgetType):-
     local(Name,restaurante,Location,_),tipoComida(Name,FoodType,BudgetType).
 
 getRestaurantes(Location,FoodType,BudgetType,Result):-
-                                        findall((Name,Location,FoodType,BudgetType),
+                                        findall(restaurante(_,Name,Location,FoodType,BudgetType,_),
                                             searchRestaurante(Name,Location,FoodType,BudgetType),
                                             Result).
 
