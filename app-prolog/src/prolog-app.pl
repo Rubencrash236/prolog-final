@@ -128,7 +128,6 @@ getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Sta
 searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars):-
     local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType,Price < Budget.
 
-<<<<<<< HEAD
 searchRestaurante(Name,Location,FoodType,BudgetType):-
     local(Name,restaurante,Location,_),tipoComida(Name,FoodType,BudgetType).
 
