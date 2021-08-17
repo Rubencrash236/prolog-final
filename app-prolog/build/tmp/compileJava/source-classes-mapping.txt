@@ -1,3 +1,5 @@
+edu/pucmm/prolog/Models/General.java
+ edu.pucmm.prolog.Models.General
 edu/pucmm/prolog/Services/ConsultasServices.java
  edu.pucmm.prolog.Services.ConsultasServices
 edu/pucmm/prolog/Main.java

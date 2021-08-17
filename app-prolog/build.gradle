@@ -3,7 +3,7 @@ plugins {
     id 'application'
     id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
-
+sourceCompatibility = 1.8
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -19,6 +19,7 @@ shadowJar{
     archiveVersion = ''
 }
 
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
@@ -26,6 +27,8 @@ dependencies {
     compile "org.slf4j:slf4j-simple:1.7.28"
     compile 'io.javalin:javalin:3.13.7'
     compile "org.thymeleaf:thymeleaf:3.0.11.RELEASE"
+
+    implementation files('../libraries/jpl.jar')
 
     compile "com.fasterxml.jackson.core:jackson-databind:2.10.1"
 

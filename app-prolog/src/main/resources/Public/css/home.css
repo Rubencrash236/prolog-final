@@ -1,3 +1,7 @@
 h1 {
     color: dodgerblue;
 }
+
+.transformacion {
+    text-transform: capitalize;
+}

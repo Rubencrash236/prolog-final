@@ -119,6 +119,7 @@ getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieT
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
 getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Stars,Location),L).
 
+
 % Por si cambiamos al otro modelo de distancia
 % cercano(Lugar1,Lugar2):- distancia(Lugar1,Lugar2,Distancia), Distancia =< 50.
 
@@ -128,3 +129,4 @@ cercano(Lugar1,Lugar2):- cerca(Lugar1,Lugar2).
 % La relacion de cerca no es bidireccional por lo que si no se encuentra un hecho con el orden
 % establecio, se probaría invirtiendo el orden de los lugares
 cercano(Lugar1,Lugar2):- cerca(Lugar2,Lugar1).
+

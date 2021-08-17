@@ -31,6 +31,7 @@ local(star_bucks,cafe,'santo domingo',alta).
 local(el_polo,cafe,duarte,media).
 local(segafredo_zanetti,cafe,'la altagracia',baja).
 
+
 %hotel(nombre, [servicios], ubicacion, valoracion, precio)
 
 hotel('hilton',[wifi,piscina,estacionamiento,spa,restaurante,bar,gym],'bayahibe',8,,4284).
@@ -135,10 +136,12 @@ searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars):-
     local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType,Price < Budget.
 
 % Busca todos los restaurantes dadas sus caracteristicas
+
 getRestaurantes(Location,FoodType,BudgetType,Budget,Stars,Result):-
                                         findall([Name,Location,FoodType,BudgetType,Budget,Stars],
                                             searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars),
                                             Result).
+
 % Busca todos los restaurantes cercanos a una ubicacion y cumpliendo con las demas condiciones
 getRestaurantesCercanos(Location,FoodType,BudgetType,Budget,Stars,Result):-
                                         lugaresCercanos(Location,Cercanos),
