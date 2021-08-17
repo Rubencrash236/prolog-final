@@ -13,8 +13,8 @@ local(shushi_bali,restaurante,duarte,alta).
 local(el_fogon,restaurante,santiago,media).
     tipoComida(el_fogon,criolla,100).
 
-local(el_cayo,restaurante,samana,baja).
-    tipoComida(el_cayo,pescados_y_mariscos,100).
+local(el_cayo,restaurante,santiago,baja).
+    tipoComida(el_cayo,pescados_y_mariscos,'ECONOMICO').
 
 local(drink_king,bar,espalliat,media).
 local(la_esquina_de_chalo,bar,'puerto plata',alta).
@@ -121,8 +121,8 @@ cerca(samana,'las galeras').
 % itera sobre las pelis de un cinema y devuelve el cine si este contiene el tipo de pelicula que se quiere
 movieType([]).
 movieType([Movie|Movies], Type):- pelicula(Movie,XType,_), XType = Type -> !; movieType(Movies,Type).
-getCinemaMovieType(Cinema, MovieType, Location):-cine(Cinema,Location,_,_,Movies), movieType(Movies,MovieType).
-getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Location),L).
+getCinemaMovieType(Cinema, MovieType,Init,End, Location):-cine(Cinema,Location,InitReal,EndReal,Movies), movieType(Movies,MovieType), (InitReal=<Init;EndReal>=End).
+getAllCinemas(Cinema, MovieType,Init,End, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Init,End,Location),L).
 
 % dame los bares o discotecas dado una puntuacion, y ubicacion.
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
