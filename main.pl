@@ -1,7 +1,20 @@
+cerca('punta cana',higuey).
+cerca('punta cana','san rafael').
+cerca('punta cana','bavaro').
+cerca('bavaro',higuey).
+cerca('bavaro','san rafael').
+cerca('san francisco',tenares).
+cerca(santiago,moca).
+cerca(moca,tenares).
+cerca(moca,'san francisco').
+cerca(samana,'las terrenas').
+cerca(samana,'las galeras').
+
+
 local(sbg,restaurante,'santo domingo',excelente).
     tipoComida(sbg,gourmet).
 
-local(shushi_bali,restaurante,duarte,alta).
+local(shushi_bali,restaurante,'san francisco',alta).
     tipoComida(shushi_bali,japonesa).
 
 local(el_fogon,restaurante,santiago,media).
@@ -10,32 +23,32 @@ local(el_fogon,restaurante,santiago,media).
 local(el_cayo,restaurante,samana,baja).
     tipoComida(el_cayo,pescados_y_mariscos).
 
-local(drink_king,bar,espalliat,media).
+local(drink_king,bar,moca,media).
 local(la_esquina_de_chalo,bar,'puerto plata',alta).
-local(boston_cafe,bar,duarte,media).
+local(boston_cafe,bar,'san francisco',media).
 local(q_tasting,bar,'santo domingo',excelente).
 
-local(roof,discoteca,duarte,alta).
-local(gold,discoteca,'hermanas mirabal',media).
+local(roof,discoteca,'san francisco',alta).
+local(gold,discoteca,'tenares',media).
 local(dubai,discoteca,santiago,alta).
 local(clubber,discoteca,'puerto plata',baja).
 
 local(la_cafeteria,cafe,santiago,alta).
 local(star_bucks,cafe,'santo domingo',alta).
-local(el_polo,cafe,duarte,media).
-local(segafredo_zanetti,cafe,'la altagracia',baja).
+local(el_polo,cafe,'san francisco',media).
+local(segafredo_zanetti,cafe,'punta cana',baja).
 
 actCultural(yago_yo_no_soy_el_que_soy,teatro,'santo domingo',Precio).
 actCultural(terapia,teatro,santiago,Precio).
 actCultural(bony_y_kin,teatro,'santo domingo',Precio).
 
-actCultural(casa_juan_ponce,museo,'la altagracia',Precio).
+actCultural(casa_juan_ponce,museo,'san rafael',Precio).
 actCultural(centro_leon,museo,santiago,Precio).
 actCultural(faro_colon,museo,'santo domingo',Precio).
 
 actCultural(los_montaner,concierto,'santo domingo',Precio).
 actCultural(hits_tour,concierto,'santo domingo',Precio).
-actCultural(sunday_brunch,concierto,'la altagracia',Precio).
+actCultural(sunday_brunch,concierto,'punta cana',Precio).
 
 playa('playa rincon', 'las galeras').
 playa('cayo levantado','samana').
@@ -106,4 +119,14 @@ getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieT
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
 getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Stars,Location),L).
 
-% 
+
+% Por si cambiamos al otro modelo de distancia
+% cercano(Lugar1,Lugar2):- distancia(Lugar1,Lugar2,Distancia), Distancia =< 50.
+
+
+cercano(Lugar1,Lugar2):- Lugar1 = Lugar2.
+cercano(Lugar1,Lugar2):- cerca(Lugar1,Lugar2).
+% La relacion de cerca no es bidireccional por lo que si no se encuentra un hecho con el orden
+% establecio, se probaría invirtiendo el orden de los lugares
+cercano(Lugar1,Lugar2):- cerca(Lugar2,Lugar1).
+
