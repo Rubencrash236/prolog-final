@@ -1,6 +1,8 @@
 package edu.pucmm.prolog.Controllers;
 
 import edu.pucmm.prolog.Models.General;
+import edu.pucmm.prolog.Models.Hotel;
+import edu.pucmm.prolog.Models.Restaurante;
 import io.javalin.Javalin;
 import org.jpl7.Atom;
 import org.jpl7.Query;
@@ -80,16 +82,84 @@ public class ConsultasController {
             ctx.render("/Public/html/CineResult.html",model);
         });
 
+        app.post("/restaurante",ctx -> {
+            Map<String,Object> model = new HashMap<>();
+            String puntuacion = ctx.formParam("puntuacion");
+            String costo = ctx.formParam("tcosto");
+            String comida = ctx.formParam("tcomida");
+
+            //No se como lo vayas a poner realmente
+            if(ctx.formParam("cercano").equalsIgnoreCase("Si")){
+                Resultado = "getRestaurantesCercanos('"+ general.getUbicacion()
+                        + "'," + comida + ",'" + costo + "'," + puntuacion + ",Result)";
+            }else{
+                Resultado = "getRestaurantes('"+ general.getUbicacion()
+                        + "'," + comida + ",'" + costo + "'," + puntuacion + ",Result)";
+            }
+
+            if(query.hasSolution()){
+                Query consulta = new Query(Resultado);
+                Map result = consulta.getSolution();
+
+                String[] res = result.get("Result").toString().split("\\),");
+                ArrayList<Restaurante> restaurantes = new ArrayList<>();
+
+                for(int i = 0; i <res.length; i ++){
+                    String[] myRes = res[i].split(",");
+                    Restaurante aux = new Restaurante(res[0],res[1],res[2],res[3],res[4],res[5]);
+                    restaurantes.add(aux);
+                }
+                model.put("restaurantes",restaurantes);
+                // ctx.render("/Public/");
+            }
+        });
         app.get("/restaurante",ctx -> {
             Map<String, Object> model = new HashMap<>();
             ctx.render("/Public/html/Restaurante.html",model);
         });
 
+        app.post("/discoteca",ctx -> {
+            Map<String,Object> model = new HashMap<>();
+            String puntuacion = ctx.formParam("puntuacion");
+
+            Resultado = "getAllBarOrDisco(Site," + puntuacion + "," + general.getUbicacion() + ",L)";
+
+            if(query.hasSolution()){
+                Query barAndDisco = new Query(Resultado);
+                Map aux = barAndDisco.getSolution();
+
+                List<String> res = new ArrayList<String>(Arrays.asList(aux.get("L").toString().substring(1, aux.get("L").toString().length()-1).replaceAll("'","").split(",")));
+                model.put("locales", res);
+            }
+            //ctx.render
+        });
         app.get("/discoteca",ctx -> {
             Map<String, Object> model = new HashMap<>();
             ctx.render("/Public/html/Discoteca.html",model);
         });
+        app.post("/hoteles",ctx -> {
+           Map<String,Object> model = new HashMap<>();
+           Resultado = "getHoteles("+general.getUbicacion() +","+ ctx.formParam("puntuacion") + "," +
+                        ctx.formParam("estrellas") + "," + ctx.formParam("tPrecio") + "," +
+                        ctx.formParam("servicios") + ",Result)";
 
+           if(query.hasSolution()){
+               Query consulta = new Query(Resultado);
+               Map aux = consulta.getSolution();
+
+               String[] res = aux.get("Result").toString().split("\\),");
+               ArrayList<Hotel> hoteles = new ArrayList<>();
+
+               for(int i = 0; i <res.length; i ++){
+                   String[] myRes = res[i].split(",");
+                   Hotel aux1 = new Hotel(res[0],res[1],res[2],res[3],res[4]);
+                   hoteles.add(aux1);
+               }
+
+               model.put("hoteles",hoteles);
+           }
+           //ctx.render();
+        });
         app.get("/actividadculturales",ctx -> {
             Map<String, Object> model = new HashMap<>();
             ctx.render("/Public/html/ActividadCultural.html",model);

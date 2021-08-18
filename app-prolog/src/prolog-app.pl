@@ -137,13 +137,13 @@ searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars):-
 
 % Busca todos los restaurantes dadas sus caracteristicas
 
-getRestaurantes(Location,FoodType,BudgetType,Budget,Stars,Result):-
+getRestaurantes(Location,FoodType,BudgetType,Stars,Result):-
                                         findall([Name,Location,FoodType,BudgetType,Budget,Stars],
                                             searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars),
                                             Result).
 
 % Busca todos los restaurantes cercanos a una ubicacion y cumpliendo con las demas condiciones
-getRestaurantesCercanos(Location,FoodType,BudgetType,Budget,Stars,Result):-
+getRestaurantesCercanos(Location,FoodType,BudgetType,Stars,Result):-
                                         lugaresCercanos(Location,Cercanos),
                                         getCercanosAux(FoodType,BudgetType,Budget,Stars,Cercanos,Result).
 
