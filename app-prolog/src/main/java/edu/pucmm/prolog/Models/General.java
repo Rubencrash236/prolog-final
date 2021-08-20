@@ -1,35 +1,15 @@
 package edu.pucmm.prolog.Models;
 
 public class General {
-    private float capaital;
-    private String fecha;
     private String ubicacion;
     private String actividad;
 
-    public General(float capaital, String fecha, String ubicacion, String actividad) {
-        this.capaital = capaital;
-        this.fecha = fecha;
+    public General( String ubicacion, String actividad) {
         this.ubicacion = ubicacion;
         this.actividad = actividad;
     }
 
     public General() {
-    }
-
-    public float getCapaital() {
-        return capaital;
-    }
-
-    public void setCapaital(float capaital) {
-        this.capaital = capaital;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
 
     public String getUbicacion() {

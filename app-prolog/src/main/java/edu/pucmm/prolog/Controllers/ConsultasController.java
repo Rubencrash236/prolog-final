@@ -32,11 +32,25 @@ public class ConsultasController {
         });
 
         app.post("/consultar",ctx -> {
-          general.setCapaital(ctx.formParam("capital",Float.class).get());
           general.setUbicacion(ctx.formParam("ubicacion"));
-          general.setFecha(ctx.formParam("fecha"));
           general.setActividad(ctx.formParam("actividad"));
-          ctx.redirect("/cine");
+
+          if(ctx.formParam("actividad",Integer.class).get() == 1){
+              ctx.redirect("/discoteca");
+          }
+          if(ctx.formParam("actividad",Integer.class).get() == 2){
+              ctx.redirect("/discoteca");
+            }
+          if(ctx.formParam("actividad",Integer.class).get() == 3){
+              ctx.redirect("/cine");
+            }
+          if(ctx.formParam("actividad",Integer.class).get() == 4){
+                ctx.redirect("/restaurante");
+            }
+            if(ctx.formParam("actividad",Integer.class).get() == 5){
+                ctx.redirect("/actividadculturales");
+            }
+
         });
 
         app.get("/cine",ctx -> {
@@ -47,19 +61,7 @@ public class ConsultasController {
 
         app.post("/cine",ctx -> {
             Map<String, Object> model = new HashMap<>();
-
-            String n1 = null;
-            String n2 = null;
-
-            if(Integer.parseInt(ctx.formParam("tpelicula"))==5){
-                n1 = "horror";
-            }
-            if(Integer.parseInt(general.getUbicacion()) == 1){
-                n2 = "santiago";
-            }
-
-            Resultado = "getAllCinemas(" + "Cinema," + "'" + n1 + "'" + "," + "'" +  n2 + "'" + ',' + "L)";
-
+            Resultado = "getAllCinemas(" + "Cinema," + "'" + ctx.formParam("tpelicula") + "'" + "," + "'" +  general.getUbicacion() + "'" + ',' + "L)";
             ctx.redirect("/cineresult");
             ctx.render("/Public/html/Cine.html",model);
         });
@@ -74,7 +76,6 @@ public class ConsultasController {
 
                 List<String> myList = new ArrayList<String>(Arrays.asList(aux.get("L").toString().substring(1, aux.get("L").toString().length()-1).replaceAll("'","").split(",")));
 
-                System.out.println(aux.get("L"));
                 model.put("cines",myList);
             }
             ctx.render("/Public/html/CineResult.html",model);
@@ -87,6 +88,11 @@ public class ConsultasController {
 
         app.get("/discoteca",ctx -> {
             Map<String, Object> model = new HashMap<>();
+            if(general.getActividad().equals("2")){
+                model.put("local","Discoteca");
+            }else{
+                model.put("local","Bar");
+            }
             ctx.render("/Public/html/Discoteca.html",model);
         });
 
@@ -95,4 +101,5 @@ public class ConsultasController {
             ctx.render("/Public/html/ActividadCultural.html",model);
         });
     }
+
 }

@@ -12,7 +12,7 @@
 <body>
 <div class="container">
   <br>
-  <h1>Opciones Para Discoteca</h1>
+  <h1 th:text="${'Opciones Para '+ local}">Opciones Para Discoteca</h1>
   <hr>
   <br>
   <form enctype="multipart/form-data"  method="post" th:attr="action=${accion}" >
@@ -25,7 +25,7 @@
         <div class="row">
           <div class="mb-2 col-md-6">
             <label for="puntuacion" class="col-sm-2 col-form-label">Puntuacion:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-12">
               <select class="form-select" placeholder="puntuacion" aria-label="Default select example" id="puntuacion" name="puntuacion" required>
                 <option value="1">Baja</option>
                 <option value="2">Media</option>
