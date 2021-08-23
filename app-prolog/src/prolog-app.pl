@@ -13,8 +13,8 @@ local(shushi_bali,restaurante,duarte,alta).
 local(el_fogon,restaurante,santiago,media).
     tipoComida(el_fogon,criolla,100).
 
-local(el_cayo,restaurante,samana,baja).
-    tipoComida(el_cayo,pescados_y_mariscos,100).
+local(el_cayo,restaurante,santiago,baja).
+    tipoComida(el_cayo,pescados_y_mariscos,'ECONOMICO').
 
 local(drink_king,bar,espalliat,media).
 local(la_esquina_de_chalo,bar,'puerto plata',alta).
@@ -30,6 +30,14 @@ local(la_cafeteria,cafe,santiago,alta).
 local(star_bucks,cafe,'santo domingo',alta).
 local(el_polo,cafe,duarte,media).
 local(segafredo_zanetti,cafe,'la altagracia',baja).
+
+
+%hotel(nombre, [servicios], ubicacion, valoracion, precio).
+
+hotel('hilton',[wifi,piscina,estacionamiento,spa,restaurante,bar,gym],'bayahibe',8,4284).
+hotel('casa de campo',[wifi,alberca,spa,restaurante,bar,gym],'la romana',9,5,206).
+hotel('hyatt',[piscina,spa,restaurante,bar,gym],'bavaro',9,5,511).
+hotel('gran jimenoa',[piscina,spa,estacionamiento,mascotas,restaurante,bar],'jarabacoa','8',2,52).
 
 actCultural(yago_yo_no_soy_el_que_soy,teatro,'santo domingo',Precio).
 actCultural(terapia,teatro,santiago,Precio).
@@ -113,29 +121,46 @@ cerca(samana,'las galeras').
 % itera sobre las pelis de un cinema y devuelve el cine si este contiene el tipo de pelicula que se quiere
 movieType([]).
 movieType([Movie|Movies], Type):- pelicula(Movie,XType,_), XType = Type -> !; movieType(Movies,Type).
-getCinemaMovieType(Cinema, MovieType, Location):-cine(Cinema,Location,_,_,Movies), movieType(Movies,MovieType).
-getAllCinemas(Cinema, MovieType, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Location),L).
+getCinemaMovieType(Cinema, MovieType,Init,End, Location):-cine(Cinema,Location,InitReal,EndReal,Movies), movieType(Movies,MovieType), (InitReal=<Init;EndReal>=End).
+getAllCinemas(Cinema, MovieType,Init,End, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Init,End,Location),L).
 
 % dame los bares o discotecas dado una puntuacion, y ubicacion.
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
 getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Stars,Location),L).
 
+% Busca los sitios cercanos a una ubicacion especificada
+lugaresCercanos(Location,Cercanos):- bagof(Location1, cerca(Location,Location1),Cercanos).
+
+% Busca un restaurante dado sus atributos
 searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars):-
     local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType,Price < Budget.
 
-getRestaurantes(Location,FoodType,BudgetType,Budget,Stars,Result):-
+% Busca todos los restaurantes dadas sus caracteristicas
+
+getRestaurantes(Location,FoodType,BudgetType,Stars,Result):-
                                         findall([Name,Location,FoodType,BudgetType,Budget,Stars],
                                             searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars),
                                             Result).
 
-getRestaurantesCercanos(Location,FoodType,BudgetType,Budget,Stars,Result):-
-                                        bagof(Location1, cerca(Location,Location1),Cercanos),
+% Busca todos los restaurantes cercanos a una ubicacion y cumpliendo con las demas condiciones
+getRestaurantesCercanos(Location,FoodType,BudgetType,Stars,Result):-
+                                        lugaresCercanos(Location,Cercanos),
                                         getCercanosAux(FoodType,BudgetType,Budget,Stars,Cercanos,Result).
 
 getCercanosAux(_,_,_,_,[],[]).
 getCercanosAux(FoodType,BudgetType,Budget,Stars,[Cerca|Cercanos],Result):- getRestaurantes(Cerca,FoodType,BudgetType,Budget,Stars,R1),
                                                              getCercanosAux(FoodType,BudgetType,Budget,Stars,Cercanos,R2),
                                                              append(R1,R2,Result),!.
+
+getHoteles(Ubicacion,Puntuacion,Estrellas,TipoPrecio,Servicios,Result):- findall([Nombre,Ubicacion, Puntuacion,Estrellas,TipoPrecio,Servicios],
+                                                                         checkHoteles(Nombre, Servicios, Ubicacion, Puntuacion,Estrellas,TipoPrecio),
+                                                                         Result).
+% Busca un hotel a partir de las caracteristicas, revisa que el precio del hotel sea de la categoria que se pasó por parametro y de que el hotel
+% cuente con los servicios requeridos
+checkHoteles(Nombre, Servicios, Ubicacion, Valoracion,Estrellas,TipoPrecio):-
+                                     hotel(Nombre, ServiciosHotel, Ubicacion, Valoracion,Estrellas,PrecioHotel),
+                                     clasificacionPrecio(PrecioHotel,TipoPrecio),
+                                     subset(Servicios,ServiciosHotel).
 
 modificarPrecio(Precio,'ECONOMICO'):- retract(precio('ECONOMICO',_)),asserta(precio('ECONOMICO',Precio)).
 modificarPrecio(Precio,'MEDIO'):- retract(precio('MEDIO',_)),asserta(precio('MEDIO',Precio)).

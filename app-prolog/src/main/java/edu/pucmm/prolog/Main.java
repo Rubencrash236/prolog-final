@@ -1,5 +1,6 @@
 package edu.pucmm.prolog;
 
+import com.google.gson.Gson;
 import edu.pucmm.prolog.Controllers.ConsultasController;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
@@ -8,6 +9,9 @@ import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 import org.jpl7.*;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class Main {

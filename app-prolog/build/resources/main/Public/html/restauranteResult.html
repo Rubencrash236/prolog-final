@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="Templates/plantilla.html::header">
+    <meta charset="UTF-8">
+
+    <title th:text="${titulo}">Title</title>
+    <nav th:replace="Templates/plantilla.html::navbar"></nav>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="css/home.css" th:href="@{css/home.css}" />
+
+</head>
+<body>
+
+
+<div class="container">
+    <br>
+    <h1>Listado de Restaurante</h1>
+
+    <table class="table table-striped ">
+        <thead class="table1 ">
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ubicacion</th>
+            <th scope="col">Comida</th>
+            <th scope="col">Tipo Precio</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Puntuacion</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="r : ${restaurante}">
+            <td th:text="${r.nombre}" scope="row">1</td>
+            <td th:text="${r.ubicacion}">Defecto</td>
+            <td th:text="${r.tipoComida}" >0</td>
+            <td th:text="${r.tipoPrecio} >0</td>
+            <td th:text="${r.precio} >0</td>
+            <td th:text="${r.puntuacion} >0</td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+
+</html>
