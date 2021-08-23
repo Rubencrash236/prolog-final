@@ -102,7 +102,7 @@ public class ConsultasController {
 
 
             Resultado = "getRestaurantesCercanos('"+ general.getUbicacion()
-                        + "','" + comida + "','" + costo + "'," + puntuacion + ",Result)";
+                        + "'," + comida + ",'" + costo + "'," + puntuacion + ",Result)";
 
             System.out.println(Resultado);
 
