@@ -5,16 +5,16 @@ precio('MEDIO',1500).
 precio('ECONOMICO',500).
 
 local(sbg,restaurante,'santo domingo',excelente).
-    tipoComida(sbg,gourmet,2500).
-
 local(shushi_bali,restaurante,duarte,alta).
-    tipoComida(shushi_bali,japonesa,1000).
-
 local(el_fogon,restaurante,santiago,media).
-    tipoComida(el_fogon,criolla,100).
-
 local(el_cayo,restaurante,santiago,baja).
-    tipoComida(el_cayo,pescados_y_mariscos,'ECONOMICO').
+
+tipoComida(el_cayo,pescados_y_mariscos,1500).
+tipoComida(sbg,gourmet,2500).
+tipoComida(shushi_bali,japonesa,1000).
+tipoComida(el_fogon,criolla,100).
+
+
 
 local(drink_king,bar,espalliat,media).
 local(la_esquina_de_chalo,bar,'puerto plata',alta).
@@ -34,7 +34,7 @@ local(segafredo_zanetti,cafe,'la altagracia',baja).
 
 %hotel(nombre, [servicios], ubicacion, valoracion, precio)
 
-hotel('hilton',[wifi,piscina,estacionamiento,spa,restaurante,bar,gym],'bayahibe',8,,4284).
+hotel('hilton',[wifi,piscina,estacionamiento,spa,restaurante,bar,gym],'bayahibe',8,3,4284).
 hotel('casa de campo',[wifi,alberca,spa,restaurante,bar,gym],'la romana',9,5,206).
 hotel('hyatt',[piscina,spa,restaurante,bar,gym],'bavaro',9,5,511).
 hotel('gran jimenoa',[piscina,spa,estacionamiento,mascotas,restaurante,bar],'jarabacoa','8',2,52).
@@ -132,24 +132,24 @@ getAllBarOrDisco(Site,Stars,Location,L):- findall((Site), getBarOrDisco(Site,Sta
 lugaresCercanos(Location,Cercanos):- bagof(Location1, cerca(Location,Location1),Cercanos).
 
 % Busca un restaurante dado sus atributos
-searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars):-
-    local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType,Price < Budget.
+searchRestaurante(Name,Location,FoodType,BudgetType,Stars):-
+    local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType.
 
 % Busca todos los restaurantes dadas sus caracteristicas
 
 getRestaurantes(Location,FoodType,BudgetType,Stars,Result):-
-                                        findall([Name,Location,FoodType,BudgetType,Budget,Stars],
-                                            searchRestaurante(Name,Location,FoodType,BudgetType,Budget,Stars),
+                                        findall([Name,Location,FoodType,BudgetType,Stars],
+                                            searchRestaurante(Name,Location,FoodType,BudgetType,Stars),
                                             Result).
 
 % Busca todos los restaurantes cercanos a una ubicacion y cumpliendo con las demas condiciones
 getRestaurantesCercanos(Location,FoodType,BudgetType,Stars,Result):-
                                         lugaresCercanos(Location,Cercanos),
-                                        getCercanosAux(FoodType,BudgetType,Budget,Stars,Cercanos,Result).
+                                        getCercanosAux(FoodType,BudgetType,Stars,Cercanos,Result).
 
-getCercanosAux(_,_,_,_,[],[]).
-getCercanosAux(FoodType,BudgetType,Budget,Stars,[Cerca|Cercanos],Result):- getRestaurantes(Cerca,FoodType,BudgetType,Budget,Stars,R1),
-                                                             getCercanosAux(FoodType,BudgetType,Budget,Stars,Cercanos,R2),
+getCercanosAux(_,_,_,[],[]).
+getCercanosAux(FoodType,BudgetType,Stars,[Cerca|Cercanos],Result):- getRestaurantes(Cerca,FoodType,BudgetType,Stars,R1),
+                                                             getCercanosAux(FoodType,BudgetType,Stars,Cercanos,R2),
                                                              append(R1,R2,Result),!.
 
 getHoteles(Ubicacion,Puntuacion,Estrellas,TipoPrecio,Servicios,Result):- findall([Nombre,Ubicacion, Puntuacion,Estrellas,TipoPrecio,Servicios],
