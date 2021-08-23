@@ -39,17 +39,17 @@ hotel('casa de campo',[wifi,alberca,spa,restaurante,bar,gym],'la romana',9,5,206
 hotel('hyatt',[piscina,spa,restaurante,bar,gym],'bavaro',9,5,511).
 hotel('gran jimenoa',[piscina,spa,estacionamiento,mascotas,restaurante,bar],'jarabacoa','8',2,52).
 
-actCultural(yago_yo_no_soy_el_que_soy,teatro,'santo domingo',Precio).
-actCultural(terapia,teatro,santiago,Precio).
-actCultural(bony_y_kin,teatro,'santo domingo',Precio).
+actCultural(yago_yo_no_soy_el_que_soy,teatro,'santo domingo',500).
+actCultural(terapia,teatro,santiago,1000).
+actCultural(bony_y_kin,teatro,'santo domingo',2000).
 
-actCultural(casa_juan_ponce,museo,'la altagracia',Precio).
-actCultural(centro_leon,museo,santiago,Precio).
-actCultural(faro_colon,museo,'santo domingo',Precio).
+actCultural(casa_juan_ponce,museo,'la altagracia',500).
+actCultural(centro_leon,museo,santiago,200).
+actCultural(faro_colon,museo,'santo domingo',500).
 
-actCultural(los_montaner,concierto,'santo domingo',Precio).
-actCultural(hits_tour,concierto,'santo domingo',Precio).
-actCultural(sunday_brunch,concierto,'la altagracia',Precio).
+actCultural(los_montaner,concierto,'santo domingo',5000).
+actCultural(hits_tour,concierto,'santo domingo',1000).
+actCultural(sunday_brunch,concierto,'la altagracia',0).
 
 playa('playa rincon', 'las galeras').
 playa('cayo levantado','samana').
@@ -162,9 +162,14 @@ checkHoteles(Nombre, Servicios, Ubicacion, Valoracion,Estrellas,TipoPrecio):-
                                      clasificacionPrecio(PrecioHotel,TipoPrecio),
                                      subset(Servicios,ServiciosHotel).
 
-modificarPrecio(Precio,'economico'):- retract(precio('ECONOMICO',_)),asserta(precio('ECONOMICO',Precio)).
-modificarPrecio(Precio,'medio'):- retract(precio('MEDIO',_)),asserta(precio('MEDIO',Precio)).
-modificarPrecio(Precio,'elevado'):- retract(precio('ELEVADO',_)),asserta(precio('ELEVADO',Precio)).
+getActividades(Tipo,Ubicacion,TPrecio,Result):-findall([Nombre,Tipo,Ubicacion,Precio],
+                                               auxActividades(Nombre,Tipo,Ubicacion,TPrecio,Precio),
+                                               Result).
+auxActividades(Nombre,Tipo,Ubicacion,TPrecio,Precio):- actCultural(Nombre,Tipo,Ubicacion,Precio),clasificacionPrecio(Precio,TPrecio).
+
+modificarPrecio(Precio,'economico'):- retract(precio('economico',_)),asserta(precio('economico',Precio)).
+modificarPrecio(Precio,'medio'):- retract(precio('medio',_)),asserta(precio('medio',Precio)).
+modificarPrecio(Precio,'elevado'):- retract(precio('elevado',_)),asserta(precio('elevado',Precio)).
 
 clasificacionPrecio(Precio,'economico'):- precio('economico',Cant),Precio =< Cant.
 clasificacionPrecio(Precio,'medio'):- precio('economico',Min),precio('medio',Max),Precio > Min,Precio =< Max.
