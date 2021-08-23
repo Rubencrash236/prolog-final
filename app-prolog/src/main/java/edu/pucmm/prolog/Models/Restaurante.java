@@ -5,15 +5,13 @@ public class Restaurante {
     private String ubicacion;
     private String tipoComida;
     private String tipoPrecio;
-    private String precio;
     private String puntuacion;
 
-    public Restaurante(String nombre, String ubicacion, String tipoComida, String tipoPrecio, String precio, String puntuacion) {
+    public Restaurante(String nombre, String ubicacion, String tipoComida, String tipoPrecio, String puntuacion) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.tipoComida = tipoComida;
         this.tipoPrecio = tipoPrecio;
-        this.precio = precio;
         this.puntuacion = puntuacion;
     }
 
@@ -33,9 +31,6 @@ public class Restaurante {
         return tipoPrecio;
     }
 
-    public String getPrecio() {
-        return precio;
-    }
 
     public String getPuntuacion() {
         return puntuacion;

@@ -23,19 +23,17 @@
             <th scope="col">Ubicacion</th>
             <th scope="col">Comida</th>
             <th scope="col">Tipo Precio</th>
-            <th scope="col">Precio</th>
             <th scope="col">Puntuacion</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="r : ${restaurante}">
+        <tr th:each="r : ${restaurantes}">
             <td th:text="${r.nombre}" scope="row">1</td>
             <td th:text="${r.ubicacion}">Defecto</td>
             <td th:text="${r.tipoComida}" >0</td>
-            <td th:text="${r.tipoPrecio} >0</td>
-            <td th:text="${r.precio} >0</td>
-            <td th:text="${r.puntuacion} >0</td>
+            <td th:text="${r.tipoPrecio}" >0</td>
+            <td th:text="${r.puntuacion}" >0</td>
 
         </tr>
         </tbody>

@@ -1,8 +1,8 @@
 :- dynamic precio/2.
 
-precio('ELEVADO',2000).
-precio('MEDIO',1500).
-precio('ECONOMICO',500).
+precio('elevado',2000).
+precio('medio',1500).
+precio('economico',500).
 
 local(sbg,restaurante,'santo domingo',excelente).
 local(shushi_bali,restaurante,duarte,alta).
@@ -162,10 +162,10 @@ checkHoteles(Nombre, Servicios, Ubicacion, Valoracion,Estrellas,TipoPrecio):-
                                      clasificacionPrecio(PrecioHotel,TipoPrecio),
                                      subset(Servicios,ServiciosHotel).
 
-modificarPrecio(Precio,'ECONOMICO'):- retract(precio('ECONOMICO',_)),asserta(precio('ECONOMICO',Precio)).
-modificarPrecio(Precio,'MEDIO'):- retract(precio('MEDIO',_)),asserta(precio('MEDIO',Precio)).
-modificarPrecio(Precio,'ELEVADO'):- retract(precio('ELEVADO',_)),asserta(precio('ELEVADO',Precio)).
+modificarPrecio(Precio,'economico'):- retract(precio('ECONOMICO',_)),asserta(precio('ECONOMICO',Precio)).
+modificarPrecio(Precio,'medio'):- retract(precio('MEDIO',_)),asserta(precio('MEDIO',Precio)).
+modificarPrecio(Precio,'elevado'):- retract(precio('ELEVADO',_)),asserta(precio('ELEVADO',Precio)).
 
-clasificacionPrecio(Precio,'ECONOMICO'):- precio('ECONOMICO',Cant),Precio =< Cant.
-clasificacionPrecio(Precio,'MEDIO'):- precio('ECONOMICO',Min),precio('MEDIO',Max),Precio > Min,Precio =< Max.
-clasificacionPrecio(Precio,'ELEVADO'):- precio('ELEVADO',Cant),Precio > Cant.
+clasificacionPrecio(Precio,'economico'):- precio('economico',Cant),Precio =< Cant.
+clasificacionPrecio(Precio,'medio'):- precio('economico',Min),precio('medio',Max),Precio > Min,Precio =< Max.
+clasificacionPrecio(Precio,'elevado'):- precio('elevado',Cant),Precio > Cant.
