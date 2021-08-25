@@ -21,43 +21,58 @@
             Consultar
           </div>
           <div class="card-body">
-
             <div class="row">
 
-       <div class="mb-2 col-md-6">
-        <label for="capital" class="col-sm-2 col-form-label">Capital:</label>
-        <div class="col-sm-10">
-          <input type="number" class="form-control" id="capital" name="capital" placeholder="capital" required  >
-        </div>
-      </div>
+              <div class="mb-2 col-md-6">
+                <label for="actividad" class="col-sm-2 col-form-label">Ubicacion:</label>
+                <input list="encodings" placeholder="Ubicacion" class="col-sm-12 form-control" name="ubicacion">
+                <datalist id="encodings">
+                  <option value="azua">Azua</option>
+                  <option value="bahoruco">Bahoruco</option>
+                  <option value="barahona">Barahona</option>
+                  <option value="dajabon">Dajabón</option>
+                  <option value="distrito nacional">Distrito Nacional</option>
+                  <option value="duarte">Duarte</option>
+                  <option value="elias piña">Elías Piña</option>
+                  <option value="el seibo">El Seibo</option>
+                  <option value="espaillat">Espaillat</option>
+                  <option value="hato mayor">Hato Mayor</option>
+                  <option value="hermanas mirabal">Hermanas Mirabal</option>
+                  <option value="independencia">Independencia</option>
+                  <option value="la altagracia">La Altagracia</option>
+                  <option value="la romana">La Romana</option>
+                  <option value="la vega">La Vega</option>
+                  <option value="maria trinidad sanchez">María Trinidad Sánchez</option>
+                  <option value="moseñor nouel">Monseñor Nouel</option>
+                  <option value="monte cristi">Monte Cristi</option>
+                  <option value="monte plata">Monte Plata</option>
+                  <option value="pedernales">Pedernales</option>
+                  <option value="peravia">Peravia</option>
+                  <option value="puerto plata">Puerto Plata</option>
+                  <option value="samana">Samaná</option>
+                  <option value="sanchez ramirez">Sánchez Ramírez</option>
+                  <option value="san cristobal">San Cristóbal</option>
+                  <option value="san jose de ocoa">San José de Ocoa</option>
+                  <option value="san juan">San Juan</option>
+                  <option value="san pedro de macoris">San Pedro de Macorís</option>
+                  <option value="santiago">Santiago</option>
+                  <option value="santiago rodriguez">Santiago Rodríguez</option>
+                  <option value="santo domingo">Santo Domingo</option>
+                  <option value="valverde">Valverde</option>
+                </datalist>
+              </div>
 
-      <div class="mb-2 col-md-6">
-        <label for="ubicacion" class="col-sm-2 col-form-label">Ubicacion:</label>
-        <div class="col-sm-10">
-          <select class="form-select" placeholder="Ubicacion" aria-label="Default select example" id="ubicacion" name="ubicacion">
-            <option value="1">Santiago</option>
-            <option value="2">Santo Domingo</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="mb-2 col-md-6">
-        <label for="fecha" class="col-sm-2 col-form-label">Fecha:</label>
-        <div class="col-sm-10">
-          <select class="form-select" placeholder="Fecha" aria-label="Default select example" id="fecha" name="fecha" required>
-            <option value="1">Ma&ntilde;ana</option>
-            <option value="2">Esta Semana</option>
-            <option value="3">Todo el Mes</option>
-          </select>
-        </div>
-      </div>
 
       <div class="mb-2 col-md-6">
         <label for="actividad" class="col-sm-2 col-form-label">Actividad:</label>
-        <div class="col-sm-10">
+        <div class="col-sm-12">
           <select class="form-select" placeholder="Actividad" aria-label="Default select example" id="actividad" name="actividad" required>
             <option value="1">Bar</option>
-            <option value="2">Cine</option>
+            <option value="2">Discoteca</option>
+            <option value="3">Cine</option>
+            <option value="4">Restaurante</option>
+            <option value="5">Actividades Culturales</option>
+            <option value="6">Hotel</option>
           </select>
         </div>
       </div>

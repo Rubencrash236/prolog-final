@@ -5,3 +5,8 @@ h1 {
 .transformacion {
     text-transform: capitalize;
 }
+
+.table1{
+    background-color: #100128;
+    color: white;
+}
