@@ -97,6 +97,43 @@ cine('bella vista mall','santo domingo',3,8,['luca','black widow','cruela','the 
 cine('blue mall','santo domingo',3,8,['luca','the seventh day','after','raya and the last dragon']).
 cine('galeria 360','santo domingo',3,8,['luca','oxygen','the seventh day','raya and the last dragon']).
 
+hiking('Amber Route', 'puerto plata', 'https://www.godominicanrepublic.com/poi/family/puerto-plata/amber-route/').
+hiking('Armando Bermúdez National Park', 'jarabacoa','https://www.godominicanrepublic.com/poi/family/jarabacoa/armando-bermudez-national-park/').
+hiking('Cachote', 'barahona', 'https://www.godominicanrepublic.com/poi/family/barahona/cachote/').
+hiking('Charcos de los militares', 'puerto plata', 'https://www.godominicanrepublic.com/poi/canyoning-rappelling/puerto-plata/charcos-de-los-militares/').
+hiking('Ciguapa Falls', 'puerto plata','https://www.godominicanrepublic.com/poi/canyoning-rappelling/puerto-plata/ciguapa-falls/').
+hiking('Cueva de la virgen', 'barahona','https://www.godominicanrepublic.com/poi/caving/barahona/cueva-de-la-virgen/').
+hiking('Cuevas de cabarete', 'puerto plata', 'https://www.godominicanrepublic.com/poi/caving/puerto-plata/cuevas-de-cabarete/').
+hiking('El Choco national park', 'puerto plata', 'https://www.godominicanrepublic.com/poi/caving/puerto-plata/el-choco-national-park/').
+hiking('El mogote', 'jarabacoa','https://www.godominicanrepublic.com/poi/family/jarabacoa/el-mogote/').
+hiking('Hoyo azul', 'punta cana','https://www.godominicanrepublic.com/poi/caving/punta-cana/hoyo-azul/').
+hiking('La ciénaga','barahona', 'https://www.godominicanrepublic.com/poi/family/barahona/la-cienega/').
+hiking('La confluencia', 'jarabacoa', 'https://www.godominicanrepublic.com/poi/family/jarabacoa/la-confluencia/').
+hiking('Laguna de bávaro', 'punta cana', 'https://www.godominicanrepublic.com/poi/adventure/punta-cana/laguna-de-bavaro/').
+hiking('Las ondas', 'punta cana', 'https://www.godominicanrepublic.com/poi/caving/punta-cana/las-ondas/').
+hiking('Los haitises national park', 'samaná', 'https://www.godominicanrepublic.com/poi/bird-watching/samana/los-haitises-national-park-2/').
+hiking('Mount isabel de Torres', 'puerto plata', 'https://www.godominicanrepublic.com/poi/adventure/puerto-plata/mount-isabel-de-torres/').
+hiking('Padre nuestro ecological trail','la romana', 'https://www.godominicanrepublic.com/poi/adventure/bayahibe/padre-nuestro-ecological-trail/').
+hiking('Parque ecológico ojos indígenas','punta cana', 'https://www.godominicanrepublic.com/poi/cenotes-springs/punta-cana/parque-ecologico-ojos-indigenas/').
+hiking('Paseo de los flamencos', 'pedernales', 'https://www.godominicanrepublic.com/poi/family/pedernales/paseo-de-los-flamencos/').
+hiking('Pico Duarte', 'jarabacoa', 'https://www.godominicanrepublic.com/poi/adventure/jarabacoa/pico-duarte/').
+hiking('Sendero de los helechos', 'constanza', 'https://www.godominicanrepublic.com/poi/family/constanza/sendero-de-los-helechos/').
+hiking('Sendero del cangrejo','montecristi', 'https://www.godominicanrepublic.com/poi/hiking/montecristi/sendero-del-cangrejo/').
+hiking('Valle del tetero', 'constanza', 'https://www.godominicanrepublic.com/poi/cenotes-springs/constanza/valle-del-tetero/').
+hiking('Valle nuevo national park', 'constanza', 'https://www.godominicanrepublic.com/poi/adventure/constanza/valle-nuevo-national-park/').
+
+casino('Be Live Hamaca', 'santo domingo', 'http://www.belivehotels.com/hotel/EN/ficha_hotel/hamaca/casinos.jsp').
+casino('Coral Costa Caribe’s Dream Casino', 'san pedro de macorís', 'https://www.godominicanrepublic.com/poi/dining-nightlife/casinos-gaming/juan-dolio/juan-dolio-casinos/').
+casino('La Romana Casinos', 'la romana', 'https://www.godominicanrepublic.com/poi/dining-nightlife/casinos-gaming/la-romana/la-romana-casinos/').
+casino('Puerto Plata Casinos', 'puerto plata', 'https://www.godominicanrepublic.com/poi/dining-nightlife/casinos-gaming/puerto-plata/puerto-plata-casinos/').
+casino('Punta Cana Casinos','punta cana', 'https://www.godominicanrepublic.com/poi/dining-nightlife/casinos-gaming/punta-cana/punta-cana-casinos/').
+casino('Samaná Casinos', 'samana', 'https://www.godominicanrepublic.com/poi/dining-nightlife/casinos-gaming/samana/samana-casinos/').
+casino('Hodelpa Gran Almirante', 'santiago', 'http://www.hodelpa.com/en/content/casino.html').
+casino('Hodelpa Centro Plaza', 'santiago','http://www.hodelpa.com/en/content/casino.html').
+casino('Hotel Ambar', 'santiago',  'http://www.hotelambar.com.do/').
+casino('Hotel Matum', 'santiago', 'http://hotelmatum.com/').
+casino('Hotel Platino', 'santiago', 'http://www.hotelplatinord.com/').
+
 monumento('obelisco','santo domingo').
 monumento('faro a colon','santo domingo').
 monumento('heroes de santome','san juan').
@@ -123,6 +160,15 @@ movieType([]).
 movieType([Movie|Movies], Type):- pelicula(Movie,XType,_), XType = Type -> !; movieType(Movies,Type).
 getCinemaMovieType(Cinema, MovieType,Init,End, Location):-cine(Cinema,Location,InitReal,EndReal,Movies), movieType(Movies,MovieType), (InitReal=<Init;EndReal>=End).
 getAllCinemas(Cinema, MovieType,Init,End, Location,L):- findall((Cinema), getCinemaMovieType(Cinema,MovieType,Init,End,Location),L).
+
+
+% dame todos los lugares para hacer hiking dada una provincia
+hikingSpot(HikingSpot, Location, Link):- hiking(HikingSpot, Location, Link).
+getHikingSpots(Location, Response):- findall([HikingSpot, Link], hikingSpot(HikingSpot,Location,Link), Response).
+
+% dame los casinos de una provincia
+getCasino(Name, Location, Link):- casino(Name,Location,Link).
+getAllCasino(Location, Response):- findall([Name, Link], getCasino(Name,Location,Link), Response).
 
 % dame los bares o discotecas dado una puntuacion, y ubicacion.
 getBarOrDisco(Site,Stars,Location):- local(Site,bar,Location,Stars);local(Site,discoteca,Location,Stars).
