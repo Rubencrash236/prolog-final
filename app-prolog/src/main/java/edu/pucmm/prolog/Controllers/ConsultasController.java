@@ -39,7 +39,11 @@ public class ConsultasController {
         app.post("/consultar",ctx -> {
           general.setUbicacion(ctx.formParam("ubicacion"));
           general.setActividad(ctx.formParam("actividad"));
-
+          
+          if(query.hasSolution()){
+              Resultado = "modCapital(" + ctx.formParam("capital")+")";
+              Query consulta = new Query(Resultado);
+          }
           if(ctx.formParam("actividad",Integer.class).get() == 1){
               ctx.redirect("/discoteca");
           }
@@ -135,8 +139,8 @@ public class ConsultasController {
         app.post("/discoteca",ctx -> {
             //Map<String,Object> model = new HashMap<>();
             String puntuacion = ctx.formParam("puntuacion");
-
-            Resultado = "getAllBarOrDisco(Site," + puntuacion + "," + general.getUbicacion() + ",L)";
+            String otrasActividades = ctx.formParam("otrasActiviades");
+            Resultado = "evaluar("+otrasActividades+"),getAllBarOrDisco(Site," + puntuacion + "," + general.getUbicacion() + ",L)";
 
             if(query.hasSolution()){
                 Query barAndDisco = new Query(Resultado);
@@ -168,7 +172,8 @@ public class ConsultasController {
 
         app.post("/hoteles",ctx -> {
            Map<String,Object> model = new HashMap<>();
-           Resultado = "getHoteles('"+general.getUbicacion() +"',"+ ctx.formParam("puntuacion") + "," +
+           String otrasActividades = ctx.formParam("otrasActividades");
+           Resultado = "evaluar("+otrasActividades+"),getHoteles('"+general.getUbicacion() +"',"+ ctx.formParam("puntuacion") + "," +
                         ctx.formParam("estrellas") + "," + ctx.formParam("tPrecio") + "," +
                         ctx.formParam("servicios") + ",Result)";
 
@@ -197,7 +202,8 @@ public class ConsultasController {
 
         app.post("/actividadculturales",ctx -> {
             Map<String,Object> model = new HashMap<>();
-            Resultado = "getActividades("+ctx.formParam("actividadcultural")+",'"+general.getUbicacion()+"','"+ctx.formParam("precio")+"',Result)";
+            String otrasActividades = ctx.formParam("otrasActividades");
+            Resultado = "evaluad("+otrasActividades+"),getActividades("+ctx.formParam("actividadcultural")+",'"+general.getUbicacion()+"','"+ctx.formParam("precio")+"',Result)";
 
             if(query.hasSolution()){
                 Query consulta = new Query(Resultado);

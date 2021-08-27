@@ -1,8 +1,13 @@
 :- dynamic precio/2.
+:- dynamic total/1.
+:- dynamic capital/1.
 
 precio('elevado',2000).
 precio('medio',1500).
 precio('economico',500).
+
+total(0).
+capital(0).
 
 local(sbg,restaurante,'santo domingo',excelente).
 local(shushi_bali,restaurante,duarte,alta).
@@ -133,7 +138,7 @@ lugaresCercanos(Location,Cercanos):- bagof(Location1, cerca(Location,Location1),
 
 % Busca un restaurante dado sus atributos
 searchRestaurante(Name,Location,FoodType,BudgetType,Stars):-
-    local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType.
+    local(Name,restaurante,Location,Stars),tipoComida(Name,FoodType,Price),clasificacionPrecio(Price,Type), Type = BudgetType,total(X),capital(Y),Y =< x + Price.
 
 % Busca todos los restaurantes dadas sus caracteristicas
 
@@ -160,12 +165,12 @@ getHoteles(Ubicacion,Puntuacion,Estrellas,TipoPrecio,Servicios,Result):- findall
 checkHoteles(Nombre, Servicios, Ubicacion, Valoracion,Estrellas,TipoPrecio):-
                                      hotel(Nombre, ServiciosHotel, Ubicacion, Valoracion,Estrellas,PrecioHotel),
                                      clasificacionPrecio(PrecioHotel,TipoPrecio),
-                                     subset(Servicios,ServiciosHotel).
+                                     subset(Servicios,ServiciosHotel),total(X),capital(Y),Y =< X+PrecioHotel.
 
 getActividades(Tipo,Ubicacion,TPrecio,Result):-findall([Nombre,Tipo,Ubicacion,Precio],
                                                auxActividades(Nombre,Tipo,Ubicacion,TPrecio,Precio),
                                                Result).
-auxActividades(Nombre,Tipo,Ubicacion,TPrecio,Precio):- actCultural(Nombre,Tipo,Ubicacion,Precio),clasificacionPrecio(Precio,TPrecio).
+auxActividades(Nombre,Tipo,Ubicacion,TPrecio,Precio):- actCultural(Nombre,Tipo,Ubicacion,Precio),clasificacionPrecio(Precio,TPrecio),total(X),capital(Y),Y=< X + Precio.
 
 modificarPrecio(Precio,'economico'):- retract(precio('economico',_)),asserta(precio('economico',Precio)).
 modificarPrecio(Precio,'medio'):- retract(precio('medio',_)),asserta(precio('medio',Precio)).
@@ -174,3 +179,19 @@ modificarPrecio(Precio,'elevado'):- retract(precio('elevado',_)),asserta(precio(
 clasificacionPrecio(Precio,'economico'):- precio('economico',Cant),Precio =< Cant.
 clasificacionPrecio(Precio,'medio'):- precio('economico',Min),precio('medio',Max),Precio > Min,Precio =< Max.
 clasificacionPrecio(Precio,'elevado'):- precio('elevado',Cant),Precio > Cant.
+
+
+evaluar([]).
+evaluar([Head|Tail]):- min(Head),evaluar(Tail).
+
+min(restaurante):-findall(Precio,tipoComida(_,_,Precio),R),list_min(Min,R), min_aux(Min).
+min(hotel):-findall(Precio,hotel(_,_,_,_,Precio),R),list_min(Min,R),min_aux(Min).
+min(actCultural):- findall(Precio,actCultural(_,_,_,Precio),R),list_min(Min,R),   min_aux(Min).
+min_aux(Min):- total(Aux),Total is Aux + Min,retractall(total(_)) ,asserta(total(Total)).
+
+list_min(M, [X|Xs]):- list_min2(M, X, Xs).
+list_min2(M, M, []):- !.
+list_min2(X, Y, [Z|Zs]):-Z =< Y,!,list_min2(X, Z, Zs).
+list_min2(X, Y, [Z|Zs]):- Z >= Y, list_min2(X, Y, Zs).
+
+modCapital(Capital):- retractall(capital(_)),asserta(capital(Capital)).
