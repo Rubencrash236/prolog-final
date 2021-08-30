@@ -165,7 +165,7 @@ public class ConsultasController {
             String comida = ctx.formParam("tcomida");
 
 
-            Resultado = "evaluar([" + ctx.cookie("otras")  + "])," + "getRestaurantesCercanos('"+ general.getUbicacion()
+            Resultado = "getRestaurantesCercanos('"+ general.getUbicacion()
                         + "'," + comida + ",'" + costo + "'," + puntuacion + ",Result)";
 
             System.out.println(Resultado);
@@ -250,7 +250,7 @@ public class ConsultasController {
         app.post("/hoteles",ctx -> {
            Map<String,Object> model = new HashMap<>();
 
-           Resultado = "evaluar([" + ctx.cookie("otras")  + "])," + "getHoteles('"+general.getUbicacion() +"',"+ ctx.formParam("puntuacion") + "," +
+           Resultado = "getHoteles('"+general.getUbicacion() +"',"+ ctx.formParam("puntuacion") + "," +
                         ctx.formParam("estrellas") + "," + ctx.formParam("tcosto") + "," + "[" +
                         ctx.cookie("servicios") + "]" + ",Result)";
 
@@ -261,12 +261,13 @@ public class ConsultasController {
                Map aux = consulta.getSolution();
 
                String[] res = aux.get("Result").toString().split("],");
+               System.out.println(res[0]);
                ArrayList<Hotel> hoteles = new ArrayList<>();
                if(!aux.get("Result").toString().equalsIgnoreCase("[]")){
                    for(int i = 0; i <res.length; i ++){
                        String[] myRes = res[i].replace("[","").replace("]","").split(",");
                        String servicios = Arrays.toString(Arrays.copyOfRange(myRes, 5, myRes.length)).replace(" ","");
-                       Hotel aux1 = new Hotel(res[0],res[1],res[2],res[3],res[4],servicios);
+                       Hotel aux1 = new Hotel(myRes[0],myRes[1],myRes[2],myRes[3],myRes[4],servicios);
                        hoteles.add(aux1);
                    }
 
@@ -281,7 +282,7 @@ public class ConsultasController {
 
         app.post("/actividadculturales",ctx -> {
             Map<String,Object> model = new HashMap<>();
-            Resultado = "getActividades("+ctx.formParam("actividadcultural")+",'"+general.getUbicacion()+"','"+ctx.formParam("precio")+"',Result)";
+            Resultado = "getActividades(_,'"+general.getUbicacion()+"','"+ctx.formParam("precio")+"',Result)";
 
             System.out.println(Resultado);
             if(query.hasSolution()){
