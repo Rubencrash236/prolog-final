@@ -10,19 +10,30 @@
 
 </head>
 <body>
+
+
 <div class="container">
     <br>
-    <h1>Establecimientos de Bebidas</h1>
-    <hr>
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Nombres
-        </div>
-        <ul class="list-group list-group-flush">
-            <li th:each="local : ${locales}" th:text="${local}" class="list-group-item transformacion">An item</li>
-        </ul>
-    </div>
+    <h1>Listado de Casinos</h1>
+
+    <table class="table table-striped ">
+        <thead class="table1 ">
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Sitio Web</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="r : ${casinos}">
+            <td th:text="${r.nombre}" scope="row">1</td>
+            <td th:text="${r.sitio}">Defecto</td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 
 </body>
+
 </html>

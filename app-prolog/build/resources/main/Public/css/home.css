@@ -10,3 +10,19 @@ h1 {
     background-color: #100128;
     color: white;
 }
+
+.redondo {
+    border-radius: 10px;
+}
+
+a.btn-secondary:hover
+{background-color: blue;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: white;
+}
+
+
+

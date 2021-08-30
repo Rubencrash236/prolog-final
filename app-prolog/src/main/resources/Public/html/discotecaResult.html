@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="Templates/plantilla.html::header">
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <title th:text="${titulo}">Title</title>
+    <nav th:replace="Templates/plantilla.html::navbar"></nav>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="css/home.css" th:href="@{css/home.css}" />
+
 </head>
 <body>
+<div class="container">
+    <br>
+    <h1>Establecimientos de Bebidas</h1>
+    <hr>
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Nombres
+        </div>
+        <ul class="list-group list-group-flush">
+            <li th:each="local : ${locales}" th:text="${local}" class="list-group-item transformacion">An item</li>
+        </ul>
+    </div>
+</div>
 
 </body>
 </html>

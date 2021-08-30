@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <br>
-    <h1>Opciones Para Actividades Culturales</h1>
+    <h1>Opciones Para actualizar el precio</h1>
     <hr>
     <br>
     <form enctype="multipart/form-data"  method="post" th:attr="action=${accion}" >
@@ -21,30 +21,27 @@
                 Consultar
             </div>
             <div class="card-body">
+
                 <div class="row">
                     <div class="mb-2 col-md-6">
-                        <label for="actividad" class="col-sm-3 col-form-label">Actividad Cultural:</label>
+                        <label  class="col-sm-2 col-form-label">Economico:</label>
                         <div class="col-sm-12">
-                            <select class="form-select" placeholder="Actividad Cultural" aria-label="Default select example" id="actividad" name="actividadcultural" required>
-                                <option value="concierto">Concierto</option>
-                                <option value="teatro">Teatro</option>
-                                <option value="museo">Museo</option>
-                            </select>
+                            <input type="number" class="form-control" id="inputPassword" placeholder="Valor">
                         </div>
                     </div>
-
                     <div class="mb-2 col-md-6">
-                        <label for="precio" class="col-sm-2 col-form-label">Precio:</label>
+                        <label  class="col-sm-2 col-form-label">Medio:</label>
                         <div class="col-sm-12">
-                            <select class="form-select"  aria-label="Default select example" id="precio" name="precio" placeholder="Precio" required >
-                                <option value="economico">Econ&oacute;mico</option>
-                                <option value="medio">Medio</option>
-                                <option value="elevado">Elevado</option>
-                            </select>
+                            <input type="number" class="form-control" placeholder="Valor">
+                        </div>
+                    </div>
+                    <div class="mb-2 col-md-6">
+                        <label  class="col-sm-2 col-form-label">Elevado:</label>
+                        <div class="col-sm-12">
+                            <input type="number" class="form-control" placeholder="Valor">
                         </div>
                     </div>
 
-                    </div>
                 </div>
             </div>
             <div class="card-footer">
