@@ -17,6 +17,34 @@ public class Hotel {
         this.servicios = servicios;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public void setPuntuacion(String puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
+    public void setEstrellas(String estrellas) {
+        this.estrellas = estrellas;
+    }
+
+    public void settPrecio(String tPrecio) {
+        this.tPrecio = tPrecio;
+    }
+
+    public void setServicios(String servicios) {
+        this.servicios = servicios;
+    }
+
     public String getUbicacion() {
         return ubicacion;
     }

@@ -26,19 +26,19 @@
                     <div class="mb-2 col-md-6">
                         <label  class="col-sm-2 col-form-label">Economico:</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" id="inputPassword" placeholder="Valor">
+                            <input th:value="${z}" type="number" name="z" class="form-control" id="inputPassword" placeholder="Valor">
                         </div>
                     </div>
                     <div class="mb-2 col-md-6">
                         <label  class="col-sm-2 col-form-label">Medio:</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" placeholder="Valor">
+                            <input th:value="${y}"  type="number" class="form-control" placeholder="Valor" name="y">
                         </div>
                     </div>
                     <div class="mb-2 col-md-6">
                         <label  class="col-sm-2 col-form-label">Elevado:</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" placeholder="Valor">
+                            <input th:value="${x}"  type="number" class="form-control" placeholder="Valor" name="x">
                         </div>
                     </div>
 

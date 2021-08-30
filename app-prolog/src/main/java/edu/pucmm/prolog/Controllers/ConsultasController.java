@@ -17,7 +17,7 @@ public class ConsultasController {
     ArrayList<Casino>  Gcasinos = new ArrayList<>();
     ArrayList<Hiking>  Ghiking = new ArrayList<>();
     ArrayList<Actividades> actividades = new ArrayList<>();
-
+    ArrayList<Hotel> hoteles = new ArrayList<>();
 
     Query query = new Query("consult", new Term[] {new Atom("src/prolog-app.pl")});
 
@@ -124,13 +124,48 @@ public class ConsultasController {
             ctx.render("/Public/html/Cine.html",model);
         });
 
+
         app.get("/precio",ctx -> {
             Map<String, Object> model = new HashMap<>();
+
+            Resultado = "precio('elevado',X),precio('medio',Y),precio('economico',Z)";
+
+            if(query.hasSolution()) {
+                Query consulta = new Query(Resultado);
+                Map result = consulta.getSolution();
+
+                String x =  result.get("X").toString();
+                String y = result.get("Y").toString();
+                String z = result.get("Z").toString();
+
+                model.put("x",x);
+                model.put("y",y);
+                model.put("z",z);
+
+
+            }
+
             model.put("accion","/precio");
             ctx.render("/Public/html/Precio.html",model);
         });
 
         app.post("/precio",ctx -> {
+
+            String x = ctx.formParam("x");
+            String y = ctx.formParam("y");
+            String z = ctx.formParam("z");
+
+            Resultado = "modificarPrecio(" + x + ",'elevado')," + "modificarPrecio(" + y + ",'medio')," + "modificarPrecio(" + z + ",'economico')" ;
+
+            if(query.hasSolution()) {
+                Query consulta = new Query(Resultado);
+                Map result = consulta.getSolution();
+
+            }
+
+            ctx.redirect("precio");
+
+
 
         });
 
@@ -180,7 +215,7 @@ public class ConsultasController {
                 System.out.println(result.get("Result").toString());
                 if(!result.get("Result").toString().equalsIgnoreCase("[]")){
                   for(int i = 0; i <res.length; i ++){
-                    String[] myRes = res[i].replace("[","").replace("]","").split(",");
+                    String[] myRes = res[i].replace("[","").replace("]","").replace("'","").split(",");
                     Restaurante aux = new Restaurante(myRes[0],myRes[1],myRes[2],myRes[3],myRes[4]);
                     restaurantes.add(aux);
                     }
@@ -262,17 +297,27 @@ public class ConsultasController {
 
                String[] res = aux.get("Result").toString().split("],");
                System.out.println(res[0]);
-               ArrayList<Hotel> hoteles = new ArrayList<>();
+
                if(!aux.get("Result").toString().equalsIgnoreCase("[]")){
                    for(int i = 0; i <res.length; i ++){
-                       String[] myRes = res[i].replace("[","").replace("]","").split(",");
+                       String[] myRes = res[i].replace("[","").replace("]","").replace("'","").split(",");
                        String servicios = Arrays.toString(Arrays.copyOfRange(myRes, 5, myRes.length)).replace(" ","");
                        Hotel aux1 = new Hotel(myRes[0],myRes[1],myRes[2],myRes[3],myRes[4],servicios);
                        hoteles.add(aux1);
                    }
 
-               model.put("hoteles",hoteles);
+
+
+
            }}
+
+            ctx.redirect("hotelResult");
+        });
+
+        app.get("/hotelResult",ctx -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("hoteles",hoteles);
+            ctx.render("/Public/html/HotelResult.html",model);
         });
 
         app.get("/actividadculturales",ctx -> {
@@ -292,7 +337,7 @@ public class ConsultasController {
                 String[] res = aux.get("Result").toString().split("],");
                 if(!aux.get("Result").toString().equalsIgnoreCase("[]")){
                     for(int i = 0; i <res.length; i ++){
-                        String[] myRes = res[i].replace("[","").replace("]","").split(",");
+                        String[] myRes = res[i].replace("[","").replace("]","").replace("'","").split(",");
                         Actividades aux1 = new Actividades(myRes[0],myRes[1],myRes[2],myRes[3]);
                         actividades.add(aux1);
                     }
